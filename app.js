@@ -1,18 +1,11 @@
 import * as PIXI from './node_modules/pixi.js/dist/pixi.mjs'
 import { Container } from './node_modules/pixi.js/dist/pixi.mjs'
+import { brick, pad, circle as ball } from './gameElement.js'
 
 //import { Application, Assets, Sprite } from './node_modules/pixi.js/dist/pixi.mjs';
 const screen = {
     width: 1000,
     height: 700,
-}
-
-let brick = {
-    rows: 8,
-    column: 4,
-    height: 30,
-    width: 30,
-    backdown: 100,
 }
 
 let app = new PIXI.Application({ width: screen.width, height: screen.height })
@@ -26,8 +19,8 @@ function step() {
     generateBlocks()
     generatePad()
     generateBall()
+    moveBall()
 }
-
 
 function generateBlocks() {
     for (let row = 0; row < brick.rows; row++) {
@@ -48,16 +41,21 @@ function generateBlocks() {
 
 function generatePad() {
     let graphics = new PIXI.Graphics()
-            graphics.beginFill(0xffff00)
-            //graphics.lineStyle(5, 0xff0000)
-            graphics.drawRect(360, 650, 100, 10)
-            container.addChild(graphics)
+    graphics.beginFill(0xffff00)
+    //graphics.lineStyle(5, 0xff0000)
+    graphics.drawRect(pad.x, pad.y, pad.width, pad.height)
+    container.addChild(graphics)
 }
 
 function generateBall() {
-    const gr  = new PIXI.Graphics();
-gr.beginFill(0xffffff);
-gr.drawCircle(410, 645, 5);
-gr.endFill();
-container.addChild(gr)
+    const circle = new PIXI.Graphics()
+    circle.beginFill(0xffffff)
+    circle.drawCircle(ball.x, ball.y, ball.radius)
+    circle.endFill()
+    container.addChild(circle)
+    return circle
+}
+
+function moveBall() {
+    
 }
