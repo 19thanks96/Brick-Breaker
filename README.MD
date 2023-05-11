@@ -18,7 +18,7 @@ git clone https://github.com:19thanks96/Brick-Breaker.git
 
 Change dir to the project folder
 ```
-cd Particles-game-of-life
+cd BRICK-PIXI
 ```
 
 Install node packages
