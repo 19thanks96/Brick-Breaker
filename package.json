@@ -1,0 +1,30 @@
+{
+  "dependencies": {
+    "pixi.js": "^7.2.4"
+  },
+  "name": "pixi-brick-breaker",
+  "version": "1.0.0",
+  "description": "original brick breaker with pixi.js",
+  "main": "app.js",
+  "devDependencies": {},
+  "scripts": {
+    "start": "npx http-server .",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/19thanks96/Brick-Breaker.git"
+  },
+  "keywords": [
+    "Brick-Breaker",
+    "Brick",
+    "Breaker",
+    "brick-smashing"
+  ],
+  "author": "19thanks96",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/19thanks96/Brick-Breaker/issues"
+  },
+  "homepage": "https://github.com/19thanks96/Brick-Breaker#readme"
+}
