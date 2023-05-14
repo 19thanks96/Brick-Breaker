@@ -13,8 +13,3 @@ export let pad = {
     height: 10,
 }
 
-export let circle = {
-    x: 460,
-    y: 645,
-    radius: 5,
-}
