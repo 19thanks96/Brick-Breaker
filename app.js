@@ -79,10 +79,22 @@ function moveBall() {
             velocity.y *= -1
         }
     }
+    wall.forEach((bricks, i) => {
+        if(
+            bricks.x + 30 > ball.x - ball.width/2&&
+            bricks.x - 0 < ball.x + ball.width/2 &&
+            bricks.y + 30 > ball.y - ball.height/2 &&
+            bricks.y - 0 < ball.y + ball.height/2
+        ) {
+            if (bricks.x+5 < ball.x && ball.x > bricks.x-5) {
+                velocity.x *= -1
+            } 
+            if (bricks.y+5 < ball.y && ball.y > brick.x-5) {
+                velocity.y *= -1
+            }
+                //container.removeChild(bricks)
+            
+        }
+    })
 }
-    //air like ball enemy like player
-    //airfighter.x + airfighter.width > enemy.x &&
-    //airfighter.x < enemy.x + enemy.width &&
-    //airfighter.y + airfighter.height > enemy.y &&
-    //airfighter.y < enemy.y + enemy.height
 app.ticker.add(step)
