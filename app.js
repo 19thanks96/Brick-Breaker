@@ -56,8 +56,8 @@ function generateBlocks() {
 }
 
 function moveBall() {
-    ball.x -= velocity.x
-    ball.y -= velocity.y
+    ball.x += velocity.x
+    ball.y += velocity.y
     if (ball.x + ball.width / 2 > app.screen.width || ball.x < ball.width / 2) {
         velocity.x *= -1
     }
@@ -67,8 +67,20 @@ function moveBall() {
     ) {
         velocity.y *= -1
     }
-    
+    if (ball.x + ball.width/2 > player.x && 
+        ball.x < player.x + player.width &&
+        ball.y + ball.height/2 > player.y &&
+        ball.y < player.y + player.height/2
+    ) {
+        if(velocity.x < 0 && velocity.y > 0 ) {
+            velocity.y *= -1
+        }
+        if(velocity.x > 0 && velocity.y > 0) {
+            velocity.y *= -1
+        }
+    }
 }
+    //air like ball enemy like player
     //airfighter.x + airfighter.width > enemy.x &&
     //airfighter.x < enemy.x + enemy.width &&
     //airfighter.y + airfighter.height > enemy.y &&
