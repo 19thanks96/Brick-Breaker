@@ -1,9 +1,6 @@
 export const brick = {
     rows: 8,
     column: 4,
-    height: 30,
-    width: 30,
-    backdown: 100,
 }
 
 export let pad = {
@@ -11,5 +8,10 @@ export let pad = {
     y: 650,
     width: 100,
     height: 10,
+}
+
+export let velocity = {
+    x: 1,
+    y: 1, 
 }
 

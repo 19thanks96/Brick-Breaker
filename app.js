@@ -1,6 +1,6 @@
 import * as PIXI from './node_modules/pixi.js/dist/pixi.mjs'
 import { Container } from './node_modules/pixi.js/dist/pixi.mjs'
-import { brick, pad,  } from './gameElement.js'
+import { brick, pad, velocity } from './gameElement.js'
 
 //import { Application, Assets, Sprite } from './node_modules/pixi.js/dist/pixi.mjs';
 const screen = {
@@ -8,41 +8,39 @@ const screen = {
     height: 700,
 }
 let app = new PIXI.Application({ width: screen.width, height: screen.height })
-window.addEventListener('click', () => {
-    document.body.appendChild(app.view)
-    app.ticker.add(step)
-})
+document.body.appendChild(app.view)
+
 const container = new Container()
 app.stage.addChild(container)
+let wall = [];
 
-let ball = {
-    x: 460,
-    y: 645,
-    radius: 5,
-}
-generateBall(ball)
+const ball = new PIXI.Graphics()
+ball.x = 230
+ball.y = 320
+ball.width = 5
+ball.beginFill(0xff0000)
+ball.drawCircle(ball.x, ball.y, 10)
+ball.endFill()
+container.addChild(ball)
+
+generateBlocks()
+generatePad()
 function step() {
-    generateBlocks()
-    generatePad()
-    //renderball(firstBall)
-    
-
-    moveBall(ball)
+    moveBall()
 }
 
 function generateBlocks() {
     for (let row = 0; row < brick.rows; row++) {
         for (let column = 0; column < brick.column; column++) {
-            let graphics = new PIXI.Graphics()
-            graphics.beginFill(0xffff00)
-            graphics.lineStyle(5, 0xff0000)
-            graphics.drawRect(
-                brick.backdown + row * brick.backdown,
-                brick.backdown / 2 + column * brick.backdown,
-                brick.height,
-                brick.width
-            )
-            container.addChild(graphics)
+            const myBrick = new PIXI.Graphics()
+            myBrick.beginFill(0xffff00)
+            ;(myBrick.x = 50 + row * 50),
+                (myBrick.y = 50 / 2 + column * 50),
+                (myBrick.size = 30)
+            myBrick.lineStyle(5, 0xff0000)
+            myBrick.drawRect(myBrick.x, myBrick.y, myBrick.size, myBrick.size)
+            container.addChild(myBrick)
+            wall.push(myBrick)
         }
     }
 }
@@ -50,33 +48,24 @@ function generateBlocks() {
 function generatePad() {
     let graphics = new PIXI.Graphics()
     graphics.beginFill(0xffff00)
+
     //graphics.lineStyle(5, 0xff0000)
     graphics.drawRect(pad.x, pad.y, pad.width, pad.height)
     container.addChild(graphics)
 }
 
-function generateBall(ball) {
-    const circle = new PIXI.Graphics()
-    circle.beginFill(0xffffff)
-    circle.drawCircle(ball.x, ball.y, ball.radius)
-    circle.endFill()
-    container.addChild(circle)
-    container.circle = circle
-}
-
-function renderball(ball) {
-    
-}
+function generateBall() {}
 
 function moveBall() {
-    let vx = 1
-    container.circle.x += vx
-    container.circle.y -= vx
-    console.log(container.circle.x > ball.x)
-    console.log(container.circle.x)
     console.log(ball.x)
-    if(container.circle.x > ball.x) {
-        vx *= -1;
+    ball.x -= velocity.x
+    ball.y -= velocity.y
+    if (ball.x + ball.width > app.screen.width || ball.x < 0) {
+        velocity.x *= -1; 
+        }
+      if (ball.y + ball.height > app.screen.height || ball.y < 0) {
+        velocity.y = -1; 
+      }
     }
 
-}
+app.ticker.add(step)
