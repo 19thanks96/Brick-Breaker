@@ -18,8 +18,8 @@ app.stage.addChild(container)
 let elapsed = 0.0
 let wall = []
 const ball = new PIXI.Graphics()
-ball.x = 460
-ball.y = 640
+ball.x = Math.floor(Math.random()*800)
+ball.y = 680
 ball.width = 10
 ball.height = 10
 ball.beginFill(0xff0000)
@@ -104,14 +104,12 @@ function moveBall() {
         if (velocity.x < 0 && velocity.y > 0) {
             velocityCollisionPad =
                 (player.x - ball.x + player.width / 2 + 2) * 0.05 * -1
-            console.log(velocityCollisionPad)
             velocity.x += velocityCollisionPad
             velocity.y *= -1
         }
         if (velocity.x > 0 && velocity.y > 0) {
             velocityCollisionPad =
                 (player.x - ball.x + player.width / 2 + 2) * 0.05 * -1
-            console.log(velocityCollisionPad)
             velocity.x += velocityCollisionPad
             velocity.y *= -1
         }

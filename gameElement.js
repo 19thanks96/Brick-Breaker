@@ -5,6 +5,6 @@ export const brick = {
 
 export let velocity = {
     x: 3,
-    y: 3, 
+    y: -3, 
 }
 
