@@ -37,7 +37,7 @@ let text = new PIXI.Text(sec, endGameTextStyle)
 text.x = 10+ text.width
 text.y = 0 + text.width
 container.addChild(text)
-
+let velocityCollisionPad;
 const lives = 5
 const life = new PIXI.Text(lives, endGameTextStyle)
 life.x = screen.width - 20-10
@@ -96,13 +96,15 @@ function moveBall() {
         ball.y < player.y + player.height / 2
     ) {
         if (velocity.x < 0 && velocity.y > 0) {
-            velocity.x += Math.random()
-            velocity.y += Math.random()
+            velocityCollisionPad = ((player.x- ball.x + player.width/2+ 2)*0.05)*-1
+            console.log(velocityCollisionPad)
+            velocity.x += velocityCollisionPad
             velocity.y *= -1
         }
         if (velocity.x > 0 && velocity.y > 0) {
-            velocity.x += Math.random()
-            velocity.y += Math.random()
+            velocityCollisionPad = ((player.x- ball.x + player.width/2+ 2)*0.05)*-1
+            console.log(velocityCollisionPad)
+            velocity.x += velocityCollisionPad
             velocity.y *= -1
         }
     }
