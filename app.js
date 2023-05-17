@@ -34,20 +34,20 @@ const endGameTextStyle = new PIXI.TextStyle({
 })
 let sec = 0
 let text = new PIXI.Text(sec, endGameTextStyle)
-text.x = 10+ text.width
+text.x = 10 + text.width
 text.y = 0 + text.width
 container.addChild(text)
-let velocityCollisionPad;
+let velocityCollisionPad
 let lives = 5
 const life = new PIXI.Text(lives, endGameTextStyle)
-life.x = screen.width - 20-10
+life.x = screen.width - 20 - 10
 life.y = 0 + life.width
 container.addChild(life)
 
 const heart = PIXI.Sprite.from('./heart.png')
 heart.width = 20
 heart.height = 20
-heart.x = screen.width - heart.width - 20-10
+heart.x = screen.width - heart.width - 20 - 10
 heart.y = 0 + heart.width
 container.addChild(heart)
 
@@ -90,10 +90,9 @@ function moveBall() {
     ) {
         velocity.y *= -1
     }
-    
-    if(ball.y >= 690) {
+
+    if (ball.y >= 690) {
         lives -= 1
-        
     }
 
     if (
@@ -103,13 +102,15 @@ function moveBall() {
         ball.y < player.y + player.height / 2
     ) {
         if (velocity.x < 0 && velocity.y > 0) {
-            velocityCollisionPad = ((player.x- ball.x + player.width/2+ 2)*0.05)*-1
+            velocityCollisionPad =
+                (player.x - ball.x + player.width / 2 + 2) * 0.05 * -1
             console.log(velocityCollisionPad)
             velocity.x += velocityCollisionPad
             velocity.y *= -1
         }
         if (velocity.x > 0 && velocity.y > 0) {
-            velocityCollisionPad = ((player.x- ball.x + player.width/2+ 2)*0.05)*-1
+            velocityCollisionPad =
+                (player.x - ball.x + player.width / 2 + 2) * 0.05 * -1
             console.log(velocityCollisionPad)
             velocity.x += velocityCollisionPad
             velocity.y *= -1
@@ -144,7 +145,7 @@ function finish(elapsed) {
     if (wall.length === 0) {
         text.x = screen.width / 2
         text.y = screen.height / 2
-        text.text = 'You Win', sec
+        ;text.text = `You Win  ${sec} second`
         app.ticker.stop()
     } else {
         text.text = sec
