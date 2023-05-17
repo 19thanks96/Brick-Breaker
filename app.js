@@ -30,13 +30,26 @@ container.addChild(ball)
 container.addChild(player)
 generateBlocks()
 const endGameTextStyle = new PIXI.TextStyle({
-    fill: ['#ffffff', '#00ff99']
+    fill: ['#ffffff', '#00ff99'],
 })
-let sec = 0; 
+let sec = 0
 let text = new PIXI.Text(sec, endGameTextStyle)
-text.x = 50
-text.y = 50
+text.x = 10+ text.width
+text.y = 0 + text.width
 container.addChild(text)
+
+const lives = 5
+const life = new PIXI.Text(lives, endGameTextStyle)
+life.x = screen.width - 20-10
+life.y = 0 + life.width
+container.addChild(life)
+
+const heart = PIXI.Sprite.from('./heart.png')
+heart.width = 20
+heart.height = 20
+heart.x = screen.width - heart.width - 20-10
+heart.y = 0 + heart.width
+container.addChild(heart)
 
 addKeybordMovement(app)
 function step(delta) {
@@ -83,9 +96,13 @@ function moveBall() {
         ball.y < player.y + player.height / 2
     ) {
         if (velocity.x < 0 && velocity.y > 0) {
+            velocity.x += Math.random()
+            velocity.y += Math.random()
             velocity.y *= -1
         }
         if (velocity.x > 0 && velocity.y > 0) {
+            velocity.x += Math.random()
+            velocity.y += Math.random()
             velocity.y *= -1
         }
     }
@@ -96,31 +113,31 @@ function moveBall() {
             bricks.y + 30 > ball.y - ball.height / 2 &&
             bricks.y - 0 < ball.y + ball.height / 2
         ) {
-            if (bricks.x  < ball.x && ball.x  > bricks.x + 30 ) {
+            if (bricks.x < ball.x && ball.x > bricks.x + 30) {
                 velocity.x *= -1
                 container.removeChild(bricks)
-                return false 
+                return false
             }
-            if (bricks.y  < ball.y && ball.y  > bricks.y + 30 ) {
+            if (bricks.y < ball.y && ball.y > bricks.y + 30) {
                 velocity.y *= -1
                 container.removeChild(bricks)
                 return false
             }
         }
-        return true 
+        return true
     })
     wall = newWall
 }
 
 function finish(elapsed) {
-    sec = Math.floor(elapsed/60)
-    
+    sec = Math.floor(elapsed / 60)
+
     if (wall.length === 0) {
-        text.x = screen.width/2
-        text.y = screen.height/2
-        text.text = 'You Win'
+        text.x = screen.width / 2
+        text.y = screen.height / 2
+        text.text = 'You Win', sec
         app.ticker.stop()
-    }else {
+    } else {
         text.text = sec
     }
 }
