@@ -38,7 +38,7 @@ text.x = 10+ text.width
 text.y = 0 + text.width
 container.addChild(text)
 let velocityCollisionPad;
-const lives = 5
+let lives = 5
 const life = new PIXI.Text(lives, endGameTextStyle)
 life.x = screen.width - 20-10
 life.y = 0 + life.width
@@ -57,6 +57,7 @@ function step(delta) {
     movePad()
     moveBall()
     finish(elapsed)
+    life.text = lives
 }
 
 function generateBlocks() {
@@ -89,6 +90,12 @@ function moveBall() {
     ) {
         velocity.y *= -1
     }
+    
+    if(ball.y >= 690) {
+        lives -= 1
+        
+    }
+
     if (
         ball.x + ball.width / 2 > player.x &&
         ball.x < player.x + player.width &&
