@@ -4,7 +4,6 @@ import { brick, velocity } from './gameElement.js'
 import { addKeybordMovement, movePad } from './keyboardPad.js'
 import { player } from './pad.js'
 
-//import { Application, Assets, Sprite } from './node_modules/pixi.js/dist/pixi.mjs';
 const screen = {
     width: 1000,
     height: 700,
@@ -16,6 +15,7 @@ const container = new Container()
 container.width = screen.width
 container.height = screen.height
 app.stage.addChild(container)
+let elapsed = 0.0
 let wall = []
 const ball = new PIXI.Graphics()
 ball.x = 460
@@ -29,11 +29,21 @@ ball.position.set(ball.x, ball.y)
 container.addChild(ball)
 container.addChild(player)
 generateBlocks()
+const endGameTextStyle = new PIXI.TextStyle({
+    fill: ['#ffffff', '#00ff99']
+})
+let sec = 0; 
+let text = new PIXI.Text(sec, endGameTextStyle)
+text.x = 50
+text.y = 50
+container.addChild(text)
 
 addKeybordMovement(app)
-function step() {
+function step(delta) {
+    elapsed += delta
     movePad()
     moveBall()
+    finish(elapsed)
 }
 
 function generateBlocks() {
@@ -89,7 +99,7 @@ function moveBall() {
             if (bricks.x  < ball.x && ball.x  > bricks.x + 30 ) {
                 velocity.x *= -1
                 container.removeChild(bricks)
-                return false // Виключаємо елемент з масиву
+                return false 
             }
             if (bricks.y  < ball.y && ball.y  > bricks.y + 30 ) {
                 velocity.y *= -1
@@ -97,8 +107,21 @@ function moveBall() {
                 return false
             }
         }
-        return true // Залишаємо елемент у масиві
+        return true 
     })
     wall = newWall
+}
+
+function finish(elapsed) {
+    sec = Math.floor(elapsed/60)
+    
+    if (wall.length === 0) {
+        text.x = screen.width/2
+        text.y = screen.height/2
+        text.text = 'You Win'
+        app.ticker.stop()
+    }else {
+        text.text = sec
+    }
 }
 app.ticker.add(step)
