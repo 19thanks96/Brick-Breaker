@@ -68,7 +68,7 @@ function generateBlocks() {
             myBrick.x = 100 + row * 100
             myBrick.y = 100 / 2 + column * 100
             myBrick.size = 30
-            myBrick.lineStyle(5, 0xff0000)
+            //myBrick.lineStyle(5, 0xff0000)
             myBrick.drawRect(0, 0, myBrick.size, myBrick.size)
             myBrick.endFill()
             myBrick.position.set(myBrick.x, myBrick.y)
@@ -118,37 +118,43 @@ function moveBall() {
     }
     let newWall = wall.filter((bricks) => {
         if (
-            bricks.x + 30 > ball.x - ball.width / 2 &&
-            bricks.x - 0 < ball.x + ball.width / 2 &&
-            bricks.y + 30 > ball.y - ball.height / 2 &&
-            bricks.y - 0 < ball.y + ball.height / 2
+            bricks.x + bricks.width > ball.x - ball.width / 2 &&
+            bricks.x < ball.x + ball.width / 2 &&
+            bricks.y + bricks.height > ball.y - ball.height / 2 &&
+            bricks.y < ball.y + ball.height / 2
         ) {
-            if (bricks.x < ball.x && ball.x > bricks.x + 30) {
-                velocity.x *= -1
-                container.removeChild(bricks)
-                return false
-            }
-            if (bricks.y < ball.y && ball.y > bricks.y + 30) {
+            if (bricks.x < ball.x && ball.x < bricks.x + bricks.width) {
                 velocity.y *= -1
                 container.removeChild(bricks)
                 return false
             }
+            if (bricks.y < ball.y && ball.y < bricks.y + bricks.width) {
+                velocity.x *= -1
+                container.removeChild(bricks)
+                return false
+            } 
+            velocity.y *= -1
+            velocity.x *= -1
+                container.removeChild(bricks)
+                return false
         }
         return true
     })
     wall = newWall
 }
 
+
 function finish(elapsed) {
     sec = Math.floor(elapsed / 60)
 
     if (wall.length === 0) {
-        text.x = screen.width / 2
         text.y = screen.height / 2
-        ;text.text = `You Win  ${sec} second`
+        ;text.text = `You Win after ${sec} second and have ${lives} lives`
+        text.x = screen.width / 2 - text.width/2
         app.ticker.stop()
     } else {
         text.text = sec
     }
 }
+
 app.ticker.add(step)
