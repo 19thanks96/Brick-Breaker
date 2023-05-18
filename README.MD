@@ -7,7 +7,7 @@ Game made with: JavaScript and Pixi.js.
 
 ## Live Demo
 
-[ ] - add demo
+![live promo](/promo.gif)
 
 ## How to start
 
@@ -30,5 +30,8 @@ Start the server
 ```
 npm start
 ```
+## Generate modules graph
 
+
+![dependensies graph](/graph.svg)
 
