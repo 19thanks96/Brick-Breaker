@@ -1,4 +1,5 @@
 import * as PIXI from '../node_modules/pixi.js/dist/pixi.mjs'
+import { screen } from './gameElement.js'
 
 export const ball = new PIXI.Graphics()
 ball.x = Math.floor(Math.random()*800)
