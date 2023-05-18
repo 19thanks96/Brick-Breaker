@@ -1,13 +1,10 @@
 import * as PIXI from './node_modules/pixi.js/dist/pixi.mjs'
 import { Container } from './node_modules/pixi.js/dist/pixi.mjs'
-import { brick, velocity } from './gameElement.js'
+import { screen, brick, velocity } from './gameElement.js'
+import { ball, text, endGameTextStyle,  heart } from './gameObj.js'
 import { addKeybordMovement, movePad } from './keyboardPad.js'
 import { player } from './pad.js'
 
-const screen = {
-    width: 1000,
-    height: 700,
-}
 let app = new PIXI.Application({ width: screen.width, height: screen.height })
 document.body.appendChild(app.view)
 
@@ -15,43 +12,31 @@ const container = new Container()
 container.width = screen.width
 container.height = screen.height
 app.stage.addChild(container)
+
 let elapsed = 0.0
-let wall = []
-const ball = new PIXI.Graphics()
-ball.x = Math.floor(Math.random()*800)
-ball.y = 680
-ball.width = 10
-ball.height = 10
-ball.beginFill(0xff0000)
-ball.drawCircle(0, 0, 10)
-ball.endFill()
-ball.position.set(ball.x, ball.y)
-container.addChild(ball)
-container.addChild(player)
-generateBlocks()
-const endGameTextStyle = new PIXI.TextStyle({
-    fill: ['#ffffff', '#00ff99'],
-})
 let sec = 0
-let text = new PIXI.Text(sec, endGameTextStyle)
-text.x = 10 + text.width
-text.y = 0 + text.width
+let wall = []
+container.addChild(ball)
+
+container.addChild(player)
+
+generateBlocks()
+
 container.addChild(text)
-let velocityCollisionPad
+
+let velocityCollisionPad;
+
+container.addChild(heart)
+
+addKeybordMovement(app)
+
 let lives = 5
+
 const life = new PIXI.Text(lives, endGameTextStyle)
 life.x = screen.width - 20 - 10
 life.y = 0 + life.width
 container.addChild(life)
 
-const heart = PIXI.Sprite.from('./heart.png')
-heart.width = 20
-heart.height = 20
-heart.x = screen.width - heart.width - 20 - 10
-heart.y = 0 + heart.width
-container.addChild(heart)
-
-addKeybordMovement(app)
 function step(delta) {
     elapsed += delta
     movePad()
